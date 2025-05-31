@@ -93,6 +93,39 @@
         border: 0.1vh solid #000;
       }
 
+      /* ----------------------------------------- 斜線 -------------------------------------------- */
+
+      /* 先移除全部格子的斜線 */
+      .box::before {
+        content: none;
+      }
+
+      /* 線(左斜線) */
+      .box.line1::before {
+        content: "";
+        position: absolute;
+        height: 0.3vh;
+        width: 11vh;
+        background: #000;
+        transform: rotate(45deg);
+        transform-origin: left center;
+
+        z-index: -1;
+      }
+
+      /* 線(右斜線) */
+      .box.line2::after {
+        content: "";
+        position: absolute;
+        height: 0.2vh;
+        width: 11vh;
+        background: #000;
+        transform: rotate(135deg);
+        transform-origin: left center;
+
+        z-index: -1;
+      }
+
       /* ----------------------------------------- 黑棋 -------------------------------------------- */
       #black_army {
         display: flex;
@@ -203,9 +236,9 @@
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
+            <div class="box line1"></div>
             <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+            <div class="box line2"></div>
             <div class="box"></div>
             <div class="box"></div>
 
@@ -213,7 +246,7 @@
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
-            <div class="box"></div>
+            <div class="box line1 line2"></div>
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
@@ -326,9 +359,9 @@
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
+            <div class="box line1"></div>
             <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+            <div class="box line2"></div>
             <div class="box"></div>
             <div class="box"></div>
 
@@ -336,7 +369,7 @@
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
-            <div class="box"></div>
+            <div class="box line1 line2"></div>
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
