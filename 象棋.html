@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>象棋</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        /* padding: 20px; */
+
+        /* 定位象棋框，在畫面中間 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 100vh;
+      }
+
+      /* --------------------------------------- 字體設定 ------------------------------------------- */
+      .font {
+        writing-mode: vertical-lr;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin: 4vh;
+
+        font-size: 3vh;
+      }
+
+      /* ---------------------------------------- 整個 --------------------------------------------- */
+      #all {
+        height: 90vh;
+        display: flex;
+      }
+
+      /* ------------------------------------- 象棋框 (外框) ----------------------------------------- */
+      .land {
+        width: 80vh;
+        height: 90vh;
+
+        border: 0.1vh solid #000000;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* ------------------------------------- 棋盤 (內框) ----------------------------------------- */
+      .checkerboard {
+        width: 80%;
+
+        border: 0.1vh solid #000;
+      }
+
+      /* ------------------------------------ 黑方區域 (格子) ---------------------------------------- */
+      .black {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      /* ------------------------------------- 楚河、漢界 ------------------------------------------ */
+      .river {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        font-size: 5vh;
+      }
+
+      /* ------------------------------------ 紅方區域 (格子) ---------------------------------------- */
+      .red {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      /* ----------------------------------- 棋格本身(每個棋格) ----------------------------------------- */
+      .box {
+        width: calc(100% / 8);
+
+        height: 8vh;
+        border: 0.1vh solid #000;
+      }
+
+      /* ----------------------------------------- 黑棋 -------------------------------------------- */
+      #black_army {
+        display: flex;
+        flex-wrap: wrap;
+
+        position: absolute;
+        top: -3.5vh;
+        left: -1.4vh;
+
+        width: 67.5vh;
+        gap: 2vh 3vh;
+
+        font-weight: bold;
+      }
+
+      /* ----------------------------------- 棋子本身(每個棋子) ----------------------------------------- */
+      .chess {
+        border-radius: 50%;
+        border: 0.1vh solid #000;
+
+        font-size: 2.5vh;
+
+        background: #ffffff;
+
+        padding: 1vh;
+      }
+
+      /* ----------------------------------------- 空排 -------------------------------------------- */
+      .empty_chess {
+        visibility: hidden;
+      }
+
+      /* ----------------------------------------- 紅棋 -------------------------------------------- */
+      #red_army {
+        display: flex;
+        flex-wrap: wrap;
+
+        position: absolute;
+        top: -3.5vh;
+        left: -1.4vh;
+
+        width: 67.5vh;
+        gap: 2vh 3vh;
+
+        font-weight: bold;
+
+        color: #c41f1f;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="all">
+      <div class="font">棋盤裡，車無論，馬無糧，叫聲將軍提防提防</div>
+
+      <!-- 棋盤 (外框) -->
+      <div class="land">
+        <!-- 棋盤 (內框) -->
+        <div class="checkerboard">
+          <!-- 黑 (格子) -->
+          <div class="black">
+            <!-- 黑棋 -->
+            <div id="black_army">
+              <div class="chess">車</div>
+              <div class="chess">馬</div>
+              <div class="chess">象</div>
+              <div class="chess">士</div>
+              <div class="chess">將</div>
+              <div class="chess">士</div>
+              <div class="chess">象</div>
+              <div class="chess">馬</div>
+              <div class="chess">車</div>
+
+              <!-- 空排 -->
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+
+              <!-- 第二排 -->
+              <div class="empty_chess chess">空</div>
+              <div class="chess">包</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">包</div>
+              <div class="empty_chess chess">空</div>
+
+              <!-- 第三排 -->
+              <div class="chess">卒</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">卒</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">卒</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">卒</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">卒</div>
+            </div>
+
+            <!-- 格子 -->
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+          </div>
+
+          <!-- 楚河 -->
+          <div class="river">
+            <div class="r_1">楚河</div>
+            <div class="r_2">漢界</div>
+          </div>
+
+          <!-- 紅 (格子) -->
+          <div class="red">
+            <!-- 紅棋 -->
+            <div id="red_army">
+              <!-- 第一排 (空排) -->
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+
+              <!-- 第二排 -->
+              <div class="chess">兵</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">兵</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">兵</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">兵</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">兵</div>
+
+              <!-- 第三排 -->
+              <div class="empty_chess chess">空</div>
+              <div class="chess">炮</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="chess">炮</div>
+              <div class="empty_chess chess">空</div>
+
+              <!-- 空排 -->
+              <!-- 第一排 (空排) -->
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+              <div class="empty_chess chess">空</div>
+
+              <!-- 第三排 -->
+              <div class="chess">俥</div>
+              <div class="chess">傌</div>
+              <div class="chess">相</div>
+              <div class="chess">仕</div>
+              <div class="chess">帥</div>
+              <div class="chess">仕</div>
+              <div class="chess">相</div>
+              <div class="chess">傌</div>
+              <div class="chess">俥</div>
+            </div>
+
+            <!-- 格子 -->
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+          </div>
+        </div>
+      </div>
+      <div class="font">圖畫裡，龍不吟，虎不嘯，小小書僮可笑可笑</div>
+    </div>
+  </body>
+</html>
